@@ -1,0 +1,100 @@
+<table>
+
+    <!-- do iteration here -->
+    <tbody ng-repeat="testCard in testCards" ng-show="testCard.showTestCard" ng-init="testCard.index = $index">
+
+
+        <tr>
+            <td>Test Card Id</td>
+            <td>{{testCard.testCardId}}</td>
+        </tr>
+
+        <tr>
+            <td>Point = {{testCard.answerPoint}}</td>
+            <td>Cumulative Point = {{point}} </td>
+        </tr>
+
+
+
+        <tr>
+            <td>Question</td>
+            <td>{{testCard.question}}</td>
+        </tr>
+
+        <tr>
+            <td>Options</td>
+            <td>
+                <ul>
+                    <li ng-repeat="ops in testCard.options"
+                        class="{{ $even ? 'even-option' : 'odd-option' }}">
+                        <!-- two types of result, multi or single -->
+
+                        <div ng-if="testCard.type == 'SINGLE_ANSWER'">
+                            <input type="radio" ng-model="testCard.userAnswer" ng-value="ops" /> {{ops.id}} - {{ops.option}}
+                        </div>
+                        <div ng-if="testCard.type == 'MULTI_ANSWER'">
+                            <input type="checkbox" checklist-model="testCard.userAnswer" checklist-value="ops" /> {{ops.optionId}} - {{ops.option}}
+                        </div>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>User Answers</td>
+            <td>
+                <ul>
+                    <div ng-if="testCard.type == 'MULTI_ANSWER'">
+                        <li ng-repeat="userAnswer in testCard.userAnswer">{{userAnswer.optionId}} - {{userAnswer.option}}</li>
+                    </div>
+                    <div ng-if="testCard.type == 'SINGLE_ANSWER'">
+                        <li>{{testCard.userAnswer.optionId}} - {{testCard.userAnswer.option}}</li>
+                    </div>
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <a ng-click="toggleAnswerView($index)">
+                    <div ng-show="testCard.showAnswerView">- Hide </div>
+                    <div ng-show="! testCard.showAnswerView">+ Show </div>
+                </a>
+            </td>
+            <td>
+                <div ng-show="testCard.showAnswerView">
+                    <ul>
+                        <li ng-repeat="correctAns in testCard.correctAnswer">
+                            {{correctAns.optionId}}
+                            {{correctAns.option}}
+                            {{correctAns.explanation}}
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+
+    </tbody>
+
+    <!-- end of iteration -->
+
+    <tr>
+        <td>Result</td>
+        <td>{{itemResult}}</td>
+    </tr>
+    <tr>
+        <td colspan="2"> <a ng-click="nextTestCard($index)"> NEXT TEST CARD</a></td>
+    </tr>
+
+    <tr>
+        <td colspan="2"> <a ng-click="checkCurrentTestCardAnswer($index)"> CHECK POINT</a></td>
+    </tr>
+
+    <tr>
+        <td colspan="2"> <a ng-click="checkAllTestCardAnswer()"> CHECK ALL</a></td>
+    </tr>
+
+
+
+</table>
+

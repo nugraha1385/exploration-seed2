@@ -1,0 +1,72 @@
+<table ng-controller="testCardCtrl">
+    <tr>
+        <td>Test Card Id</td>
+        <td>{{testCard.testCardId}}</td>
+    </tr>
+
+    <tr>
+        <td>Question</td>
+        <td>{{testCard.question}}</td>
+    </tr>
+
+    <tr>
+        <td>Options</td>
+        <td>
+            <ul>
+                <li ng-repeat="ops in testCard.options"
+                    class="{{ $even ? 'even-option' : 'odd-option' }}">
+                    <!-- two types of result, multi or single -->
+
+                    <div ng-if="testCard.type == 'SINGLE_ANSWER'">
+                        <input type="radio" ng-model="testCard.userAnswer" ng-value="ops" /> {{ops.id}} - {{ops.option}}
+                    </div>
+                    <div ng-if="testCard.type == 'MULTI_ANSWER'">
+                        <input type="checkbox" checklist-model="testCard.userAnswer" checklist-value="ops" /> {{ops.optionId}} - {{ops.option}}
+                    </div>
+                </li>
+            </ul>
+        </td>
+    </tr>
+
+    <tr>
+        <td>User Answers</td>
+        <td>
+            <ul>
+                <div ng-if="testCard.type == 'MULTI_ANSWER'">
+                    <li ng-repeat="userAnswer in testCard.userAnswer">{{userAnswer.optionId}} - {{userAnswer.option}}</li>
+                </div>
+                <div ng-if="testCard.type == 'SINGLE_ANSWER'">
+                    <li>{{testCard.userAnswer.optionId}} - {{testCard.userAnswer.option}}</li>
+                </div>
+            </ul>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <a ng-click="toggleAnswerView()">
+                <div ng-show="showAnswerView">- Hide </div>
+                <div ng-show="!showAnswerView">+ Show </div>
+            </a>
+        </td>
+        <td>
+            <div ng-show="showAnswerView">
+                <ul>
+                    <li ng-repeat="correctAns in testCard.correctAnswer">
+                        {{correctAns.correctAnswerId}}
+                        {{correctAns.option}}
+                        {{correctAns.explanation}}
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Result</td>
+        <td>{{itemResult}}</td>
+    </tr>
+    <tr>
+        <td colspan="2"> <a ng-click="nextTestCard()"> NEXT TEST CARD</a></td>
+    </tr>
+</table>
