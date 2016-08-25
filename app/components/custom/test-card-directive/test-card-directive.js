@@ -3,7 +3,8 @@
 //other options is using include
 angular.module('myApp.test-card-directive', [])
 
-.directive('testCardDirective', [function(version) {
+
+.directive('testCardDirective', ['$log', function($log) {
   return {
     //valid as: A=attribute, C=class, E=Element
     restrict:'ACE',
@@ -16,7 +17,6 @@ angular.module('myApp.test-card-directive', [])
     templateUrl:"components/custom/test-card-directive/test-card-directive-template.html",
     //if we need to manipulate the DOM, use link function
     link:function(scope, elm, attrs) {
-        console.log("test testCardDirective");
 
         //define behaviour on directive
         scope.toggleAnswerView = function(index){

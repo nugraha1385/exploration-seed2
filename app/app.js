@@ -5,11 +5,12 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.test-cards',
   'myApp.test-session',
-  'checklist-model'
+  'checklist-model',
+  'testServiceModule'
 
 ]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+config(['$locationProvider', '$routeProvider', '$logProvider', function($locationProvider, $routeProvider, $logProvider) {
   $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/view/test-session'});
+  $logProvider.debugEnabled(false);
 }]);
